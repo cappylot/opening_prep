@@ -14,7 +14,11 @@ Type their username. The app downloads their games from Lichess and builds an op
   - Badges mark moves: *Main line*, *They struggle*, *Their strength*, *Best try*, *Few games*.
   - Transpositions are merged, since positions are compared, not move orders.
   - "Out of their book" appears when you reach a position they have never had.
-  - Lichess cloud eval with a best-move arrow.
+  - Engine eval that works for every position, even offline.
+    - It uses Lichess's cloud analysis when the position is known.
+    - Otherwise **Stockfish 18 runs on your phone**: the lite, single-threaded WASM build, about 7 MB, downloaded the first time it's needed and cached afterwards.
+    - The chip shows the source (☁ or chip icon), the depth, and a live dot while Stockfish is still thinking. Tap it for the best line.
+    - Evals are saved on the device, so positions you've already looked at are instant.
   - Their recent games from the current position link straight to that move on lichess.org.
 - **Prep ideas**:
   - Suggested lines follow the opponent's likely replies and pick the moves they have scored worst against.
@@ -55,6 +59,9 @@ Everything stays on your device: downloaded games, saved lines and settings are 
 - The tree, statistics and suggestions are recomputed instantly when you change a filter.
 - Scores are smoothed toward 50% (4 virtual games) so a 2–0 sample doesn't look like a sure thing.
 - The Lichess *opening explorer* API now requires authentication, so this app builds its own explorer from the raw games instead.
+- Evals are looked up in this order: the on-device cache, then `lichess.org/api/cloud-eval` (with a 2.5 s timeout and one retry), then local Stockfish, which searches to the depth set in Settings (default 18).
+  - If Lichess rate-limits cloud lookups, they're skipped for a minute and Stockfish covers.
+  - The engine stops while the app is in the background and restarts itself if it stalls.
 
 ## Development
 
@@ -87,4 +94,4 @@ Bump `VERSION` in `sw.js` when you change the list of shell files.
 
 ## License
 
-GPL-3.0-or-later, because it bundles [chessground](https://github.com/lichess-org/chessground) (GPL-3.0). It also bundles chess.js (BSD-2), Preact (MIT) and htm (Apache-2.0); their licences are in `vendor/`. Game data comes from [lichess.org](https://lichess.org). This project is not affiliated with Lichess.
+GPL-3.0-or-later, because it bundles [chessground](https://github.com/lichess-org/chessground) (GPL-3.0). It also bundles Stockfish.js 18 (GPL-3.0), chess.js (BSD-2), Preact (MIT) and htm (Apache-2.0); their licences are in `vendor/`. Game data comes from [lichess.org](https://lichess.org). This project is not affiliated with Lichess.

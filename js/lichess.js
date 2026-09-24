@@ -133,23 +133,38 @@ export async function streamGames(name, { max = 500, since, perfTypes, signal, o
   return count;
 }
 
-const evalCache = new Map();
-
-/** Cached cloud evaluation for a FEN, or null when Lichess has none. */
-export async function cloudEval(fen, signal) {
-  if (evalCache.has(fen)) return evalCache.get(fen);
-  let result = null;
-  try {
-    const res = await lfetch(`${LICHESS}/api/cloud-eval?fen=${encodeURIComponent(fen)}&multiPv=1`, { signal });
-    const data = await res.json();
-    const pv = data.pvs?.[0];
-    if (pv) result = { cp: pv.cp, mate: pv.mate, depth: data.depth, best: pv.moves?.split(' ')[0] || null, pv: pv.moves || '' };
-  } catch (e) {
-    if (e.name === 'AbortError') throw e;
-    if (e.status !== 404) return undefined; // transient: don't cache
+/**
+ * One cloud-eval lookup, never blocking on rate limits. Resolves with
+ *  { status: 'ok', result } | { status: 'miss' } | { status: 'limited' } | { status: 'error' }
+ * where result = { cp | mate, depth, best, pv } from White's point of view.
+ */
+export async function cloudEval(fen, { signal, timeout = 2500, retries = 1 } = {}) {
+  for (let attempt = 0; ; attempt++) {
+    const ctrl = new AbortController();
+    const onAbort = () => ctrl.abort();
+    signal?.addEventListener('abort', onAbort);
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    try {
+      const res = await fetch(`${LICHESS}/api/cloud-eval?fen=${encodeURIComponent(fen)}&multiPv=1`, {
+        headers: headers({ Accept: 'application/json' }),
+        signal: ctrl.signal,
+      });
+      if (res.status === 404) return { status: 'miss' };
+      if (res.status === 429) return { status: 'limited' };
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const pv = data.pvs?.[0];
+      if (!pv) return { status: 'miss' };
+      const moves = (pv.moves || '').split(' ').filter(Boolean);
+      return { status: 'ok', result: { cp: pv.cp, mate: pv.mate, depth: data.depth, best: moves[0] || null, pv: moves } };
+    } catch (e) {
+      if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+      if (attempt >= retries) return { status: 'error' };
+    } finally {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', onAbort);
+    }
   }
-  evalCache.set(fen, result);
-  return result;
 }
 
 export const gameUrl = (id, ply, color) => `${LICHESS}/${id}${color === 'black' ? '/black' : ''}${ply ? `#${ply}` : ''}`;

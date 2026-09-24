@@ -1,7 +1,7 @@
 // Persistence: IndexedDB for opponents, their games and saved lines;
 // localStorage for settings. Every call tolerates storage being unavailable.
 const DB_NAME = 'opening-prep';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 let dbPromise = null;
 
 function openDb() {
@@ -16,6 +16,10 @@ function openDb() {
       if (!db.objectStoreNames.contains('lines')) {
         const s = db.createObjectStore('lines', { keyPath: 'id' });
         s.createIndex('opp', 'opp');
+      }
+      if (!db.objectStoreNames.contains('evals')) {
+        const s = db.createObjectStore('evals', { keyPath: 'fen' });
+        s.createIndex('t', 't');
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -59,8 +63,36 @@ export const listLines = (opp) =>
 export const putLine = (line) => safe(tx('lines', 'readwrite', (s) => s.put(line)));
 export const deleteLine = (id) => safe(tx('lines', 'readwrite', (s) => s.delete(id)));
 
+// ---- engine evaluations (deepest result per position) ----
+const MAX_EVALS = 5000;
+let evalPuts = 0;
+
+export const getEval = (fen) => safe(tx('evals', 'readonly', (s) => s.get(fen)), null);
+
+export async function putEval(entry) {
+  await safe(tx('evals', 'readwrite', (s) => s.put({ ...entry, t: Date.now() })));
+  if (++evalPuts % 50 === 0) trimEvals();
+}
+
+async function trimEvals() {
+  const count = await safe(tx('evals', 'readonly', (s) => s.count()), 0);
+  if (count <= MAX_EVALS) return;
+  let excess = count - MAX_EVALS;
+  await safe(
+    tx('evals', 'readwrite', (s) => {
+      const req = s.index('t').openCursor();
+      req.onsuccess = () => {
+        const cur = req.result;
+        if (!cur || excess-- <= 0) return;
+        cur.delete();
+        cur.continue();
+      };
+    })
+  );
+}
+
 export async function clearAll() {
-  for (const s of ['opponents', 'games', 'lines']) await safe(tx(s, 'readwrite', (st) => st.clear()));
+  for (const s of ['opponents', 'games', 'lines', 'evals']) await safe(tx(s, 'readwrite', (st) => st.clear()));
 }
 
 // ---- settings ----
@@ -70,7 +102,8 @@ export const DEFAULT_SETTINGS = {
   board: 'brown', // brown | blue | green | grey
   arrows: 4,
   minGames: 3,
-  showEval: true,
+  engine: 'both', // both (cloud, then on-device Stockfish) | cloud | off
+  engineDepth: 18,
   evalArrow: true,
   coords: true,
   haptics: true,
@@ -91,6 +124,9 @@ export function getSettings() {
   } catch {
     /* private mode or corrupt value */
   }
+  // Older versions had a single on/off "showEval" toggle.
+  if (stored.showEval === false && !stored.engine) stored.engine = 'off';
+  delete stored.showEval;
   cached = { ...DEFAULT_SETTINGS, ...stored };
   return cached;
 }

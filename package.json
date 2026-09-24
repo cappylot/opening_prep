@@ -15,6 +15,7 @@
     "chess.js": "1.4.0",
     "chessground": "9.2.1",
     "htm": "3.1.1",
-    "preact": "10.29.8"
+    "preact": "10.29.8",
+    "stockfish": "^18.0.8"
   }
 }
