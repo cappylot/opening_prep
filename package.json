@@ -1,0 +1,20 @@
+{
+  "name": "opening-prep",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mobile web app to prepare chess openings against a Lichess opponent",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "vendor": "node scripts/vendor.js",
+    "test": "node --test tests/unit/*.test.js",
+    "test:e2e": "node tests/e2e/run.js",
+    "serve": "python3 -m http.server 8080"
+  },
+  "devDependencies": {
+    "chess.js": "1.4.0",
+    "chessground": "9.2.1",
+    "htm": "3.1.1",
+    "preact": "10.29.8"
+  }
+}
