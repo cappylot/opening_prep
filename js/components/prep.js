@@ -30,7 +30,7 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
   const [myColor, setMyColor] = useState(route.color || 'white');
   const [path, setPath] = useState(route.moves);
   const [cursor, setCursor] = useState(route.moves.length);
-  const [tab, setTab] = useState(route.tab);
+  const [tab, setTab] = useState(route.prepTab);
   const [filters, setFilters] = useState({ speeds: [], ratedOnly: false, periodDays: 0 });
   const [sheet, setSheet] = useState(null); // 'filters' | 'save' | {edit: line}
   const [drill, setDrill] = useState(null);
@@ -63,7 +63,7 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
         if (r.stopped) toast(`Stopped early: analysing ${plural(r.games.length, 'game')}`);
       } catch (e) {
         if (e.name === 'AbortError') {
-          if (!hasData) go('#/');
+          if (!hasData) go('#/opponents');
           return;
         }
         if (!hasData) {
@@ -233,7 +233,7 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
     : '';
 
   const header = html`<header class="topbar">
-    <${IconButton} icon="back" label="Back to search" onClick=${() => go('#/')} />
+    <${IconButton} icon="back" label="Back to opponents" onClick=${() => go('#/opponents')} />
     <div class="opp-card">
       <a class="opp-name" href=${profileUrl(opp?.name || name)} target="_blank" rel="noopener">
         ${profile?.title ? html`<span class="title-badge">${profile.title}</span>` : ''}${opp?.name || name}
@@ -256,7 +256,7 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
           ? html`<${Empty} icon="alert" title=${error?.status === 404 ? 'Player not found' : 'Could not load games'}>
               <p>${error?.message}</p>
               <div class="row gap">
-                <button class="btn" onClick=${() => go('#/')}>Back</button>
+                <button class="btn" onClick=${() => go('#/opponents')}>Back</button>
                 ${error?.status !== 404 ? html`<button class="btn primary" onClick=${() => download('full-initial')}>Try again</button>` : ''}
               </div>
             </${Empty}>`
@@ -293,7 +293,7 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
       <section class="board-col">
         ${colorbar('portrait-only')}
         <${Board} fen=${fen} orientation=${myColor} turnColor=${turnColor} dests=${dests} lastMove=${last ? [last.from, last.to] : undefined}
-          check=${chess.inCheck()} shapes=${shapes} onMove=${onBoardMove} coords=${settings.coords} resetKey=${resetKey} theme=${settings.board} />
+          check=${chess.inCheck()} shapes=${shapes} onMove=${onBoardMove} coords=${settings.coords} resetKey=${resetKey} theme=${settings.board} pieces=${settings.pieces} animation=${settings.animation} lastMoveHighlight=${settings.lastMove} />
         <div class="controls">
           <${IconButton} icon="first" label="Start position" onClick=${() => jump(0)} disabled=${cursor === 0} />
           <${IconButton} icon="prev" label="Previous move" onClick=${back} disabled=${cursor === 0} />

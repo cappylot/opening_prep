@@ -241,7 +241,7 @@ export function DrillView({ lines, tree, myColor, oppName, settings, onExit }) {
         <div class=${shake ? 'shake' : ''}>
           <${Board} fen=${fen} orientation=${myColor} turnColor=${turnColor} dests=${myTurn && status === 'play' ? destsOf(chess) : new Map()}
             lastMove=${last ? [last.from, last.to] : undefined} check=${chess.inCheck()} shapes=${shapes} onMove=${onMove}
-            coords=${settings.coords} resetKey=${resetKey} theme=${settings.board} />
+            coords=${settings.coords} resetKey=${resetKey} theme=${settings.board} pieces=${settings.pieces} animation=${settings.animation} lastMoveHighlight=${settings.lastMove} />
         </div>
         <div class="trail drill-trail">${sans.length ? formatLine(sans) : 'Starting position'}</div>
       </section>

@@ -1,0 +1,40 @@
+[StudySlug "caro-kann-black"]
+[StudyTitle "The Caro-Kann"]
+[StudySummary "A solid answer to 1.e4 that keeps the light-squared bishop active, covering the Classical, the Advance and the Exchange."]
+[StudySide "black"]
+[StudyECO "B10-B19"]
+[Event "Classical Caro-Kann"]
+[Site "ChessOpeningStudies"]
+[ECO "B18"]
+[Orientation "black"]
+
+{The Caro-Kann challenges the centre without shutting in the light-squared
+bishop, which is what makes it sturdier than the French.}
+1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5
+{[%cal Gf5h7] [%csl Ge4] The whole point. The bishop gets out before ...e6
+locks it away.}
+5. Ng3 Bg6 6. h4 h6
+{Forced, and useful: it gives the bishop a retreat and the king luft.}
+7. Nf3 Nd7 8. h5 Bh7 9. Bd3 Bxd3 10. Qxd3 e6 11. Bd2 Ngf6 12. O-O-O Be7 *
+
+[Event "Advance Variation"]
+[Site "ChessOpeningStudies"]
+[ECO "B12"]
+[Orientation "black"]
+
+{White grabs space. Develop the bishop first, then hit the base of the chain
+with ...c5.}
+1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nf3 e6 5. Be2 Ne7
+(5... c5 6. Be3 Nd7)
+6. O-O h6 7. Nbd2 Nd7 8. Nb3 c5 *
+
+[Event "Exchange and Sidelines"]
+[Site "ChessOpeningStudies"]
+[ECO "B13"]
+[Orientation "black"]
+
+{Quieter tries. Equalising is straightforward as long as you develop naturally.}
+1. e4 c6 2. d4 d5 3. exd5
+(3. f3 {The Fantasy Variation.} 3... e6 4. Nc3 Bb4)
+(3. Nd2 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6)
+3... cxd5 4. Bd3 Nc6 5. c3 Nf6 6. Bf4 Bg4 7. Qb3 Na5 8. Qa4+ Bd7 *

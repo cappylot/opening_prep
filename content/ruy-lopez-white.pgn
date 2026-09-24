@@ -1,0 +1,58 @@
+[StudySlug "ruy-lopez-white"]
+[StudyTitle "The Ruy Lopez"]
+[StudySummary "A classical 1.e4 repertoire built on the Closed Ruy Lopez, with answers to the Berlin, the Marshall and the third-move sidelines."]
+[StudySide "white"]
+[StudyECO "C60-C99"]
+[Event "Closed Main Line"]
+[Site "ChessOpeningStudies"]
+[ECO "C88"]
+[Orientation "white"]
+
+{The Ruy Lopez begins by attacking the knight that defends e5. The threat is
+slow rather than immediate, and White's real plan is to build a big centre
+behind it.}
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6
+{Black almost always asks the question first. Retreating keeps the bishop on
+its best diagonal.}
+4. Ba4 (4. Bxc6 dxc6 5. O-O {The Exchange Variation is playable but hands Black
+the bishop pair.}) 4... Nf6
+(4... Nxe4 {The Open Defence. Grab the centre back rather than the pawn.}
+5. d4 b5 6. Bb3 d5 7. dxe5 Be6)
+5. O-O Be7 6. Re1 b5 7. Bb3 d6
+(7... O-O 8. c3 d5 {The Marshall Attack. Black gives a pawn for lasting
+initiative, so know this or sidestep it.} 9. exd5 Nxd5 10. Nxe5 Nxe5 11. Rxe5 c6)
+8. c3 O-O 9. h3
+{The point of the whole set-up: stop ...Bg4 before playing d4.}
+9... Na5
+(9... Nb8 {The Breyer, rerouting the knight to d7.} 10. d4 Nbd7)
+(9... Bb7 {The Zaitsev.} 10. d4 Re8)
+10. Bc2 c5 11. d4 Qc7 *
+
+[Event "Berlin Defence"]
+[Site "ChessOpeningStudies"]
+[ECO "C67"]
+[Orientation "white"]
+
+{Against the Berlin we head for the endgame. Black's structure is damaged and
+the king has lost the right to castle, which is worth more than the bishop pair
+at club level.}
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4
+(4... Bc5 5. c3 O-O 6. d4)
+(4... d6 5. d4 Bd7 6. Nc3)
+5. d4 Nd6 6. Bxc6 dxc6 7. dxe5 Nf5 8. Qxd8+ Kxd8 9. h3 Bd7
+(9... Ke8 10. Nc3 h6)
+10. Rd1 *
+
+[Event "Third Move Alternatives"]
+[Site "ChessOpeningStudies"]
+[ECO "C64"]
+[Orientation "white"]
+
+{Everything else on move three. None of it is dangerous if you meet it with
+the centre.}
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Bc5
+(3... f5 {The Schliemann. Sharp, but the centre opens in White's favour.}
+4. Nc3 fxe4 5. Nxe4 d5 6. Nxe5)
+(3... d6 {The Steinitz Defence. Solid but passive.} 4. d4 Bd7 5. Nc3 Nf6 6. O-O)
+(3... Nge7 4. Nc3 g6 5. d4)
+4. c3 Nf6 5. d4 Bb6 6. O-O *

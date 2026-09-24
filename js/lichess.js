@@ -138,14 +138,14 @@ export async function streamGames(name, { max = 500, since, perfTypes, signal, o
  *  { status: 'ok', result } | { status: 'miss' } | { status: 'limited' } | { status: 'error' }
  * where result = { cp | mate, depth, best, pv } from White's point of view.
  */
-export async function cloudEval(fen, { signal, timeout = 2500, retries = 1 } = {}) {
+export async function cloudEval(fen, { signal, timeout = 2500, retries = 1, multiPv = 1 } = {}) {
   for (let attempt = 0; ; attempt++) {
     const ctrl = new AbortController();
     const onAbort = () => ctrl.abort();
     signal?.addEventListener('abort', onAbort);
     const timer = setTimeout(() => ctrl.abort(), timeout);
     try {
-      const res = await fetch(`${LICHESS}/api/cloud-eval?fen=${encodeURIComponent(fen)}&multiPv=1`, {
+      const res = await fetch(`${LICHESS}/api/cloud-eval?fen=${encodeURIComponent(fen)}&multiPv=${multiPv}`, {
         headers: headers({ Accept: 'application/json' }),
         signal: ctrl.signal,
       });
@@ -156,7 +156,8 @@ export async function cloudEval(fen, { signal, timeout = 2500, retries = 1 } = {
       const pv = data.pvs?.[0];
       if (!pv) return { status: 'miss' };
       const moves = (pv.moves || '').split(' ').filter(Boolean);
-      return { status: 'ok', result: { cp: pv.cp, mate: pv.mate, depth: data.depth, best: moves[0] || null, pv: moves } };
+      const pvs = data.pvs.map((p) => ({ cp: p.cp, mate: p.mate, moves: (p.moves || '').split(' ').filter(Boolean) }));
+      return { status: 'ok', result: { cp: pv.cp, mate: pv.mate, depth: data.depth, best: moves[0] || null, pv: moves, pvs } };
     } catch (e) {
       if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
       if (attempt >= retries) return { status: 'error' };
