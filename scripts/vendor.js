@@ -20,6 +20,10 @@ const copies = [
   ['preact/LICENSE', 'preact/LICENSE'],
   ['htm/dist/htm.module.js', 'htm/htm.module.js'],
   ['htm/LICENSE', 'htm/LICENSE'],
+  // Lite single-threaded Stockfish: ~7 MB, needs no cross-origin isolation headers.
+  ['stockfish/bin/stockfish-18-lite-single.js', 'stockfish/stockfish-18-lite-single.js'],
+  ['stockfish/bin/stockfish-18-lite-single.wasm', 'stockfish/stockfish-18-lite-single.wasm'],
+  ['stockfish/Copying.txt', 'stockfish/Copying.txt'],
 ];
 
 for (const [from, to] of copies) {
@@ -33,6 +37,9 @@ const hooks = readFileSync(nm('preact/hooks/dist/hooks.module.js'), 'utf8')
   .replace(/from\s*"preact"/g, 'from"./preact.module.js"')
   .replace(/\n\/\/# sourceMappingURL=.*$/, '');
 writeFileSync(out('preact/hooks.module.js'), hooks);
+
+// The Stockfish build is CommonJS; let Node run it despite our "type": "module".
+writeFileSync(out('stockfish/package.json'), '{ "type": "commonjs" }\n');
 
 // Drop source map comments (maps are not shipped).
 for (const f of ['preact/preact.module.js', 'chessground/chessground.min.js', 'chess.js/chess.js', 'htm/htm.module.js']) {

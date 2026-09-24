@@ -2,8 +2,11 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from '../../vendor/preact/hooks.module.js';
 import { html, Icon, IconButton, Segmented, toast, plural, ago, cap, shareOrCopy, vibrate, Empty } from '../ui.js';
 import { Board, arrowsFor, destsOf } from '../board.js';
-import { buildTree, fenKey, playPath, rankedMoves, openingAlong } from '../tree.js';
-import { cloudEval, profileUrl } from '../lichess.js';
+import { buildTree, fenKey, playPath, rankedMoves, openingAlong, formatLine } from '../tree.js';
+import { Chess } from '../../vendor/chess.js/chess.js';
+import { getEngine } from '../engine.js';
+import { profileUrl } from '../lichess.js';
+import { useEval } from '../evaluate.js';
 import { syncOpponent, touchOpponent } from '../data.js';
 import { listLines } from '../store.js';
 import { prepHash, go } from '../route.js';
@@ -33,7 +36,6 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
   const [drill, setDrill] = useState(null);
   const [lines, setLines] = useState([]);
   const [resetKey, setResetKey] = useState(0);
-  const [evalData, setEvalData] = useState(null);
 
   // ---- loading ----
   const download = useCallback(
@@ -136,21 +138,13 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
     if (location.hash !== h) history.replaceState(null, '', h);
   }, [shownKey, myColor, tab, data]);
 
-  // Cloud eval, debounced.
-  useEffect(() => {
-    setEvalData(null);
-    if (!settings.showEval || chess.isGameOver()) return;
-    const ctrl = new AbortController();
-    const t = setTimeout(() => {
-      cloudEval(fen, ctrl.signal)
-        .then((e) => setEvalData(e === undefined ? null : { fen, ...(e || { none: true }) }))
-        .catch(() => {});
-    }, 350);
-    return () => {
-      clearTimeout(t);
-      ctrl.abort();
-    };
-  }, [fen, settings.showEval]);
+  // Engine evaluation: cache → Lichess cloud → on-device Stockfish.
+  const { result: evalData, retry: retryEval } = useEval(fen, {
+    mode: settings.engine,
+    depth: settings.engineDepth,
+    enabled: phase === 'ready' && !drill && !chess.isGameOver(),
+  });
+  const [evalOpen, setEvalOpen] = useState(false);
 
   // Show the top of the panel whenever the position or tab changes.
   const panelRef = useRef(null);
@@ -224,7 +218,7 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
   // ---- board decorations ----
   const shapes = useMemo(() => {
     const s = arrowsFor(ranked, { oppTurn, count: settings.arrows, minGames: settings.minGames });
-    if (settings.evalArrow && evalData?.best && evalData.fen === fen) {
+    if (settings.evalArrow && evalData?.best) {
       const b = evalData.best;
       if (!s.some((x) => x.orig === b.slice(0, 2) && x.dest === b.slice(2, 4))) s.push({ orig: b.slice(0, 2), dest: b.slice(2, 4), brush: 'engine', modifiers: { lineWidth: 6 } });
     }
@@ -322,7 +316,9 @@ export function PrepView({ route, settings, updateSettings, openSettings }) {
             ? html`<${ExplorePanel} tree=${tree} node=${node} ranked=${ranked} oppTurn=${oppTurn} oppName=${opp.name} oppColor=${oppColor}
                 opening=${opening} shown=${shown} settings=${settings} onPlay=${playUci} onLoadLine=${loadLine} onBackToBook=${backToBook}
                 gameOver=${chess.isGameOver()} partial=${opp.partial}
-                evalChip=${html`<${EvalChip} data=${evalData} fen=${fen} enabled=${settings.showEval} chess=${chess} />`}
+                evalChip=${html`<${EvalChip} data=${evalData} mode=${settings.engine} chess=${chess} open=${evalOpen}
+                  onToggle=${() => setEvalOpen(!evalOpen)} onRetry=${retryEval} />`}
+                evalLine=${evalOpen ? html`<${EvalLine} data=${evalData} fen=${fen} ply=${cursor} />` : null}
                 onSave=${cursor > 0 ? () => setSheet('save') : null} />`
             : tab === 'insights'
             ? html`<${InsightsPanel} tree=${tree} allGames=${data.games} oppColor=${oppColor} oppName=${opp.name} settings=${settings}
@@ -370,34 +366,53 @@ function DownloadProgress({ phase, progress, name, onStop }) {
   </div>`;
 }
 
-function EvalChip({ data, fen, enabled, chess }) {
-  if (!enabled) return html`<span class="eval-chip off" />`;
+function formatScore(data) {
+  if (data.mate != null) return { text: `#${data.mate}`, side: data.mate > 0 ? 'white' : 'black' };
+  const v = data.cp / 100;
+  return { text: `${v > 0 ? '+' : ''}${v.toFixed(1)}`, side: v > 0.3 ? 'white' : v < -0.3 ? 'black' : 'even' };
+}
+
+function EvalChip({ data, mode, chess, open, onToggle, onRetry }) {
+  if (mode === 'off') return html`<span class="eval-chip off" />`;
   if (chess.isCheckmate()) return html`<span class="eval-chip">Checkmate</span>`;
   if (chess.isDraw() || chess.isStalemate()) return html`<span class="eval-chip">Draw</span>`;
-  if (!data || data.fen !== fen) return html`<span class="eval-chip loading" title="Cloud eval">···</span>`;
-  if (data.none) return html`<span class="eval-chip muted" title="No cloud evaluation for this position">no eval</span>`;
-  let text;
-  let side;
-  if (data.mate != null) {
-    text = `#${data.mate}`;
-    side = data.mate > 0 ? 'white' : 'black';
-  } else {
-    const v = data.cp / 100;
-    text = `${v > 0 ? '+' : ''}${v.toFixed(1)}`;
-    side = v > 0.3 ? 'white' : v < -0.3 ? 'black' : 'even';
+  if (data?.error)
+    return html`<button class="eval-chip muted" onClick=${onRetry} title=${data.error}>eval unavailable <${Icon} name="refresh" size=${13} /></button>`;
+  if (!data || data.pending) {
+    const loadingEngine = data?.pending && !getEngine().loaded;
+    return html`<span class="eval-chip loading" title="Evaluating">${loadingEngine ? 'loading engine' : '···'}</span>`;
   }
-  let best = '';
-  if (data.best) {
+  if (data.none)
+    return html`<button class="eval-chip muted" onClick=${onRetry} title=${mode === 'cloud' ? 'No cloud eval for this position' : 'No eval'}>
+      no eval <${Icon} name="refresh" size=${13} /></button>`;
+  const { text, side } = formatScore(data);
+  const src = data.source === 'cloud' ? 'Lichess cloud' : 'Stockfish on this device';
+  return html`<button class=${`eval-chip ${side} ${open ? 'open' : ''}`} onClick=${onToggle} aria-expanded=${open}
+    title=${`${src}, depth ${data.depth}${data.cached ? ' (saved)' : ''}. Tap for the best line.`}>
+    <b>${text}</b>
+    <small class="eval-src"><${Icon} name=${data.source === 'cloud' ? 'cloud' : 'cpu'} size=${12} />${data.depth}</small>
+    ${data.running ? html`<span class="eval-dot" aria-label="Still thinking" />` : ''}
+  </button>`;
+}
+
+/** The engine's best line in SAN, shown when the eval chip is tapped. */
+function EvalLine({ data, fen, ply }) {
+  if (!data?.pv?.length) return '';
+  const c = new Chess(fen);
+  const sans = [];
+  for (const uci of data.pv.slice(0, 10)) {
     try {
-      const c = new chess.constructor(fen);
-      best = c.move({ from: data.best.slice(0, 2), to: data.best.slice(2, 4), promotion: data.best[4] || 'q' }).san;
+      sans.push(c.move({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] || 'q' }).san);
     } catch {
-      /* ignore */
+      break;
     }
   }
-  return html`<span class=${`eval-chip ${side}`} title=${`Lichess cloud eval, depth ${data.depth}`}>
-    <b>${text}</b>${best ? html`<small>${best}</small>` : ''}
-  </span>`;
+  if (!sans.length) return '';
+  const src = data.source === 'cloud' ? 'Lichess cloud' : 'Stockfish on this device';
+  return html`<div class="eval-line">
+    <span class="line-moves">${formatLine(sans, ply)}</span>
+    <small>${src} · depth ${data.depth}${data.running ? ' · thinking…' : ''}</small>
+  </div>`;
 }
 
 function MoveTrail({ sans, cursor, onJump }) {

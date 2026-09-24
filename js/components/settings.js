@@ -50,8 +50,20 @@ export function SettingsSheet({ open, onClose, settings, updateSettings }) {
       onChange=${(v) => updateSettings({ arrows: v })} />
 
     <${Toggle} label="Board coordinates" checked=${settings.coords} onChange=${(v) => updateSettings({ coords: v })} />
-    <${Toggle} label="Cloud evaluation" hint="Lichess's stored engine analysis, when available" checked=${settings.showEval}
-      onChange=${(v) => updateSettings({ showEval: v })} />
+    <label class="field-label">Engine</label>
+    <${Chips} options=${[
+      { value: 'both', label: 'Cloud + device' },
+      { value: 'cloud', label: 'Cloud only' },
+      { value: 'off', label: 'Off' },
+    ]} value=${settings.engine} onChange=${(v) => updateSettings({ engine: v })} />
+    <p class="hint">Uses Lichess's cloud analysis when it has the position, otherwise runs Stockfish on this device
+      (a one-time ~7 MB download, then works offline).</p>
+    ${settings.engine === 'both'
+      ? html`<label class="field-label">Device depth</label>
+          <${Chips} options=${[14, 18, 22].map((v) => ({ value: v, label: String(v) }))} value=${settings.engineDepth}
+            onChange=${(v) => updateSettings({ engineDepth: v })} />
+          <p class="hint">Deeper is stronger but slower and uses more battery.</p>`
+      : ''}
     <${Toggle} label="Engine best-move arrow" checked=${settings.evalArrow} onChange=${(v) => updateSettings({ evalArrow: v })} />
     <${Toggle} label="Vibration" hint="On supported phones" checked=${settings.haptics} onChange=${(v) => updateSettings({ haptics: v })} />
 

@@ -1,6 +1,7 @@
 // Offline support: the app shell is served from cache and refreshed in the
-// background. Lichess API calls always go to the network.
-const VERSION = 'v2';
+// background. Lichess API calls always go to the network. The Stockfish files
+// (~7 MB) aren't precached; they're cached the first time the engine loads.
+const VERSION = 'v3';
 const CACHE = `opening-prep-${VERSION}`;
 const SHELL = [
   './',
@@ -22,6 +23,8 @@ const SHELL = [
   './js/replayer.js',
   './js/replay.worker.js',
   './js/drill.js',
+  './js/engine.js',
+  './js/evaluate.js',
   './js/components/search.js',
   './js/components/prep.js',
   './js/components/explore.js',

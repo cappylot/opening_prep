@@ -5,7 +5,7 @@ import { smoothScore, formatLine } from '../tree.js';
 import { suggestLines } from '../insights.js';
 import { gameUrl } from '../lichess.js';
 
-export function ExplorePanel({ tree, node, ranked, oppTurn, oppName, oppColor, opening, shown, settings, onPlay, onLoadLine, onBackToBook, gameOver, partial, evalChip, onSave }) {
+export function ExplorePanel({ tree, node, ranked, oppTurn, oppName, oppColor, opening, shown, settings, onPlay, onLoadLine, onBackToBook, gameOver, partial, evalChip, evalLine, onSave }) {
   const minGames = settings.minGames;
   const ideas = useMemo(
     () => (node && node.n >= minGames ? suggestLines(tree, oppColor, { start: shown, maxPly: shown.length + 10, minN: minGames, limit: 3 }) : []),
@@ -28,6 +28,7 @@ export function ExplorePanel({ tree, node, ranked, oppTurn, oppName, oppColor, o
         ${onSave ? html`<${IconButton} icon="bookmark" label="Save this line" class="accent" onClick=${onSave} />` : ''}
       </span>
     </div>
+    ${evalLine || ''}
     ${reach
       ? html`<div class="pos-stats">
           <span>${plural(reach, 'game')} here</span>

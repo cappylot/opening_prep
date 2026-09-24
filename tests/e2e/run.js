@@ -41,7 +41,14 @@ async function newPage(colorScheme) {
       return route.fulfill({ status: 200, headers: { 'content-type': 'application/x-ndjson' }, body });
     }
     if (url.pathname === '/api/cloud-eval') {
-      return route.fulfill({ json: { fen: url.searchParams.get('fen'), depth: 36, knodes: 1000, pvs: [{ cp: 27, moves: 'e2e4 e7e5 g1f3' }] } });
+      // The cloud only knows the first two positions; deeper ones need the device engine.
+      const fen = url.searchParams.get('fen');
+      const known = {
+        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1': { cp: 18, moves: 'e2e4 e7e5 g1f3' },
+        'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1': { cp: 27, moves: 'c7c5 g1f3 d7d6' },
+      }[fen];
+      if (!known) return route.fulfill({ status: 404, json: { error: 'No cloud evaluation available for that position' } });
+      return route.fulfill({ json: { fen, depth: 36, knodes: 1000, pvs: [known] } });
     }
     return route.fulfill({ status: 404, body: '' });
   });
@@ -62,7 +69,8 @@ try {
   await shot(page, 'search-autocomplete');
   await page.click('.suggest button');
   await page.waitForSelector('.move-table', { timeout: 15000 });
-  await page.waitForTimeout(600);
+  await page.waitForSelector('.eval-chip[title^="Lichess cloud"]', { timeout: 5000 });
+  await page.waitForTimeout(300);
   await shot(page, 'explore-white-start');
 
   // I play White by default: at the start it's my move, the table lists moves played vs them
@@ -89,6 +97,24 @@ try {
   await page.waitForTimeout(300);
   const trail = await page.textContent('.trail');
   assert.match(trail, /e4.*c5.*Nf3.*d6/);
+  // Not in the (mock) cloud: on-device Stockfish takes over and deepens
+  await page.waitForSelector('.eval-chip[title^="Stockfish on this device"]', { timeout: 45000 });
+  const depthOf = async () => Number((await page.textContent('.eval-src')).trim());
+  const d1 = await depthOf();
+  await page.waitForSelector('.eval-chip:not(:has(.eval-dot))[title^="Stockfish"]', { timeout: 60000 });
+  const d2 = await depthOf();
+  assert.ok(d2 >= 18 && d2 >= d1, `device eval reached depth ${d2} (first seen ${d1})`);
+  await page.click('.eval-chip');
+  await page.waitForSelector('.eval-line');
+  assert.match(await page.textContent('.eval-line'), /Stockfish on this device · depth/);
+  assert.ok(await page.$('cg-container svg g'), 'engine arrow drawn');
+  await shot(page, 'explore-device-eval');
+  // Going back to a known position uses the cloud again; returning is instant from cache
+  await page.click('button[aria-label="Start position"]');
+  await page.waitForSelector('.eval-chip[title^="Lichess cloud"]', { timeout: 5000 });
+  await page.click('button[aria-label="Last move"]');
+  await page.waitForSelector('.eval-chip[title*="(saved)"]', { timeout: 3000 });
+  await page.click('.eval-chip');
   await shot(page, 'explore-mainline');
 
   // Save the line
