@@ -1,13 +1,18 @@
 // Offline support: the app shell is served from cache and refreshed in the
 // background. Lichess API calls always go to the network. The Stockfish files
-// (~7 MB) aren't precached; they're cached the first time the engine loads.
-const VERSION = 'v3';
+// (~7 MB) and the piece-set PNGs aren't precached; they're cached on first use.
+const VERSION = 'v4';
 const CACHE = `opening-prep-${VERSION}`;
 const SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './css/app.css',
+  './css/boards.css',
+  './css/pieces.css',
+  './css/study.css',
+  './content/caro-kann-black.pgn',
+  './content/ruy-lopez-white.pgn',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/apple-touch-icon.png',
@@ -32,6 +37,27 @@ const SHELL = [
   './js/components/lines.js',
   './js/components/filters.js',
   './js/components/settings.js',
+  './js/study/chess.js',
+  './js/study/positionKey.js',
+  './js/study/sha256.js',
+  './js/study/movetree.js',
+  './js/study/pgn.js',
+  './js/study/cards.js',
+  './js/study/srs.js',
+  './js/study/plan.js',
+  './js/study/drillSession.js',
+  './js/study/metrics.js',
+  './js/study/studyStore.js',
+  './js/study/session.js',
+  './js/components/study/common.js',
+  './js/components/study/shell.js',
+  './js/components/study/library.js',
+  './js/components/study/viewer.js',
+  './js/components/study/drill.js',
+  './js/components/study/practice.js',
+  './js/components/study/editor.js',
+  './js/components/study/create.js',
+  './js/components/study/analyze.js',
   './vendor/chessground/chessground.min.js',
   './vendor/chessground/chessground.base.css',
   './vendor/chessground/chessground.brown.css',

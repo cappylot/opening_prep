@@ -5,6 +5,7 @@ import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { mockGames, mockUser } from './mock.js';
+import { studyFlows } from './study.js';
 
 const PORT = 8765;
 const BASE = `http://127.0.0.1:${PORT}/`;
@@ -58,8 +59,24 @@ async function newPage(colorScheme) {
 const shot = (page, name) => page.screenshot({ path: `${SHOTS}${String(++step).padStart(2, '0')}-${name}.png` });
 
 try {
+  // E2E_ONLY=study runs just the study flows.
+  if (process.env.E2E_ONLY !== 'study') await prepFlows();
+  await studyFlows({ newPage, shot, BASE });
+  assert.deepEqual(errors, []);
+  console.log(`e2e passed, screenshots in ${SHOTS}`);
+} catch (e) {
+  console.error(e);
+  for (const p of browser.contexts().flatMap((c) => c.pages())) await p.screenshot({ path: `${SHOTS}failure.png` }).catch(() => {});
+  console.error(errors);
+  process.exitCode = 1;
+} finally {
+  await browser.close();
+  server.kill();
+}
+
+async function prepFlows() {
   const { ctx, page } = await newPage('dark');
-  await page.goto(BASE);
+  await page.goto(`${BASE}#/opponents`);
   await page.waitForSelector('.search-view');
   await shot(page, 'search-empty');
 
@@ -244,15 +261,4 @@ try {
   await page.waitForTimeout(400);
   await shot(page, 'landscape');
   await ctx.close();
-
-  assert.deepEqual(errors, []);
-  console.log(`e2e passed, screenshots in ${SHOTS}`);
-} catch (e) {
-  console.error(e);
-  for (const p of browser.contexts().flatMap((c) => c.pages())) await p.screenshot({ path: `${SHOTS}failure.png` }).catch(() => {});
-  console.error(errors);
-  process.exitCode = 1;
-} finally {
-  await browser.close();
-  server.kill();
 }

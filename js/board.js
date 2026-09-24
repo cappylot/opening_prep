@@ -1,6 +1,6 @@
 // Chessground board wrapper plus helpers to turn tree stats into arrows.
 import { Chessground } from '../vendor/chessground/chessground.min.js';
-import { useEffect, useRef } from '../vendor/preact/hooks.module.js';
+import { useEffect, useRef, useState } from '../vendor/preact/hooks.module.js';
 import { html } from './ui.js';
 
 const brush = (key, color, opacity, lineWidth = 10) => ({ key, color, opacity, lineWidth });
@@ -61,11 +61,54 @@ export function destsOf(chess) {
   return dests;
 }
 
-export function Board({ fen, orientation, turnColor, dests, lastMove, check, shapes, onMove, coords = true, viewOnly = false, resetKey = 0, theme = 'brown' }) {
+const PROMO = [
+  ['q', 'queen'],
+  ['r', 'rook'],
+  ['b', 'bishop'],
+  ['n', 'knight'],
+];
+
+/**
+ * The chessground board.
+ * Study extras: `pieces` / `theme` pick the iOS art, `animation` is seconds per move,
+ * `highlights` maps squares to CSS classes (marks, hints, flashes), `movableColor`
+ * with a different `turnColor` turns on premoves, `drawable` lets the user draw
+ * arrows (onDraw gets the full shape list) and `askPromotion` shows a Q/R/B/N picker.
+ */
+export function Board({
+  fen,
+  orientation,
+  turnColor,
+  dests,
+  lastMove,
+  check,
+  shapes,
+  onMove,
+  coords = true,
+  viewOnly = false,
+  resetKey = 0,
+  theme = 'brown',
+  pieces = 'cburnett',
+  animation = 0.18,
+  lastMoveHighlight = true,
+  highlights,
+  movableColor,
+  onPremove,
+  onSelect,
+  drawable = false,
+  userShapes,
+  onDraw,
+  askPromotion = false,
+  decoration = '#c22e24',
+}) {
   const el = useRef(null);
   const cg = useRef(null);
-  const onMoveRef = useRef(onMove);
-  onMoveRef.current = onMove;
+  const [promo, setPromo] = useState(null);
+  const cb = useRef({});
+  cb.current = { onMove, onPremove, onSelect, onDraw, askPromotion };
+
+  const color = viewOnly ? undefined : movableColor || turnColor;
+  const premove = !viewOnly && !!movableColor && movableColor !== turnColor;
 
   useEffect(() => {
     cg.current = Chessground(el.current, {
@@ -74,12 +117,39 @@ export function Board({ fen, orientation, turnColor, dests, lastMove, check, sha
       turnColor,
       coordinates: coords,
       autoCastle: true,
-      animation: { enabled: true, duration: 180 },
-      highlight: { lastMove: true, check: true },
-      movable: { free: false, color: viewOnly ? undefined : turnColor, dests, showDests: true, rookCastle: false, events: { after: (o, d) => onMoveRef.current?.(o, d) } },
-      premovable: { enabled: false },
+      animation: { enabled: animation > 0, duration: Math.round(animation * 1000) },
+      highlight: { lastMove: lastMoveHighlight, check: true, custom: highlights },
+      movable: {
+        free: false,
+        color,
+        dests,
+        showDests: true,
+        rookCastle: false,
+        events: {
+          after: (o, d) => {
+            const piece = cg.current?.state.pieces.get(d);
+            const promotes = piece?.role === 'pawn' && (d[1] === '8' || d[1] === '1');
+            if (promotes && cb.current.askPromotion) setPromo({ orig: o, dest: d, color: piece.color });
+            else cb.current.onMove?.(o, d, promotes ? 'q' : undefined);
+          },
+        },
+      },
+      premovable: {
+        enabled: premove,
+        showDests: true,
+        events: { set: (o, d) => cb.current.onPremove?.(o, d), unset: () => cb.current.onPremove?.(null, null) },
+      },
       draggable: { enabled: true, showGhost: true },
-      drawable: { enabled: true, visible: true, brushes: BRUSHES, eraseOnClick: true },
+      selectable: { enabled: true },
+      events: { select: (key) => cb.current.onSelect?.(key) },
+      drawable: {
+        enabled: true,
+        visible: true,
+        brushes: { ...BRUSHES, deco: brush('dc', decoration, 0.9, 11) },
+        eraseOnClick: !drawable,
+        shapes: userShapes || [],
+        onChange: (sh) => cb.current.onDraw?.(sh),
+      },
     });
     return () => cg.current?.destroy();
   }, []);
@@ -92,17 +162,63 @@ export function Board({ fen, orientation, turnColor, dests, lastMove, check, sha
       lastMove,
       check,
       coordinates: coords,
-      movable: { color: viewOnly ? undefined : turnColor, dests: viewOnly ? new Map() : dests },
+      animation: { enabled: animation > 0, duration: Math.round(animation * 1000) },
+      highlight: { lastMove: lastMoveHighlight, check: true, custom: highlights },
+      movable: { color, dests: viewOnly ? new Map() : dests },
+      premovable: { enabled: premove },
     });
-  }, [fen, orientation, turnColor, lastMove && lastMove.join(), check, coords, viewOnly, resetKey, dests]);
+    if (!premove) cg.current?.cancelPremove();
+    setPromo(null);
+  }, [fen, orientation, turnColor, lastMove && lastMove.join(), check, coords, viewOnly, resetKey, dests, color, premove, animation, lastMoveHighlight]);
 
   useEffect(() => {
+    cg.current?.set({ highlight: { lastMove: lastMoveHighlight, check: true, custom: highlights } });
+  }, [highlights && [...highlights].join()]);
+
+  // redrawAll rebuilds the DOM, so only when something it draws actually changed.
+  const drawn = useRef(`${coords}|${pieces}|${theme}`);
+  useEffect(() => {
+    const key = `${coords}|${pieces}|${theme}`;
+    if (drawn.current === key) return;
+    drawn.current = key;
     cg.current?.redrawAll();
-  }, [coords]);
+  }, [coords, pieces, theme]);
+
+  useEffect(() => {
+    const st = cg.current?.state;
+    if (!st) return;
+    st.drawable.brushes.deco = brush('dc', decoration, 0.9, 11);
+    st.drawable.eraseOnClick = !drawable;
+    cg.current.setAutoShapes(st.drawable.autoShapes.slice());
+  }, [decoration, drawable]);
+
+  useEffect(() => {
+    if (userShapes) cg.current?.setShapes(userShapes);
+  }, [userShapes && JSON.stringify(userShapes), fen, resetKey]);
 
   useEffect(() => {
     cg.current?.setAutoShapes(shapes || []);
-  }, [shapes, fen, resetKey]);
+  }, [shapes && JSON.stringify(shapes), fen, resetKey]);
 
-  return html`<div class=${`board-wrap board-${theme}`}><div ref=${el} class="cg-wrap"></div></div>`;
+  const pick = (role) => {
+    const p = promo;
+    setPromo(null);
+    if (role) cb.current.onMove?.(p.orig, p.dest, role);
+    else cg.current?.set({ fen });
+  };
+
+  return html`<div class=${`board-wrap board-${theme} pieces-${pieces}`} style=${{ '--deco': decoration }}>
+    <div ref=${el} class="cg-wrap"></div>
+    ${promo &&
+    html`<div class="promo" role="dialog" aria-label="Promote to">
+      <div class="promo-box">
+        ${PROMO.map(
+          ([r, role]) => html`<button type="button" class="promo-btn cg-wrap" aria-label=${role} onClick=${() => pick(r)}>
+            <piece class=${`${role} ${promo.color}`}></piece>
+          </button>`
+        )}
+        <button type="button" class="promo-cancel" onClick=${() => pick(null)}>Cancel</button>
+      </div>
+    </div>`}
+  </div>`;
 }

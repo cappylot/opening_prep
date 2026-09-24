@@ -1,7 +1,9 @@
-// Persistence: IndexedDB for opponents, their games and saved lines;
+// Persistence: IndexedDB for opponents, their games and saved lines, and the
+// study library (studies, chapters, cards, reviews, bookmarks, app state);
 // localStorage for settings. Every call tolerates storage being unavailable.
 const DB_NAME = 'opening-prep';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
+export const STUDY_STORES = ['studies', 'chapters', 'cards', 'reviews', 'bookmarks', 'appState'];
 let dbPromise = null;
 
 function openDb() {
@@ -21,6 +23,16 @@ function openDb() {
         const s = db.createObjectStore('evals', { keyPath: 'fen' });
         s.createIndex('t', 't');
       }
+      if (!db.objectStoreNames.contains('studies')) db.createObjectStore('studies', { keyPath: 'id' }).createIndex('slug', 'slug', { unique: true });
+      if (!db.objectStoreNames.contains('chapters')) db.createObjectStore('chapters', { keyPath: 'id' }).createIndex('study', 'study');
+      if (!db.objectStoreNames.contains('cards')) db.createObjectStore('cards', { keyPath: 'id' }).createIndex('study', 'study');
+      if (!db.objectStoreNames.contains('reviews')) {
+        const s = db.createObjectStore('reviews', { keyPath: 'id', autoIncrement: true });
+        s.createIndex('card', 'card');
+        s.createIndex('t', 't');
+      }
+      if (!db.objectStoreNames.contains('bookmarks')) db.createObjectStore('bookmarks', { keyPath: 'card' });
+      if (!db.objectStoreNames.contains('appState')) db.createObjectStore('appState', { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
@@ -92,14 +104,49 @@ async function trimEvals() {
 }
 
 export async function clearAll() {
-  for (const s of ['opponents', 'games', 'lines', 'evals']) await safe(tx(s, 'readwrite', (st) => st.clear()));
+  for (const s of ['opponents', 'games', 'lines', 'evals', ...STUDY_STORES]) await safe(tx(s, 'readwrite', (st) => st.clear()));
+}
+
+// ---- study library: bulk reads and atomic multi-store writes ----
+export const getAllOf = (store) => safe(tx(store, 'readonly', (s) => s.getAll()), []).then((a) => a || []);
+
+/**
+ * Applies {store: {put: [...], del: [...]}} in one transaction, so a graded answer
+ * and its review log (or a study and all its chapters and cards) land together.
+ */
+export async function writeMany(ops) {
+  const stores = Object.keys(ops);
+  if (!stores.length) return true;
+  try {
+    const db = await openDb();
+    await new Promise((resolve, reject) => {
+      const t = db.transaction(stores, 'readwrite');
+      for (const name of stores) {
+        const s = t.objectStore(name);
+        for (const v of ops[name].put || []) s.put(v);
+        for (const k of ops[name].del || []) s.delete(k);
+      }
+      t.oncomplete = resolve;
+      t.onerror = () => reject(t.error);
+      t.onabort = () => reject(t.error);
+    });
+    return true;
+  } catch (e) {
+    console.warn('storage', e);
+    return false;
+  }
 }
 
 // ---- settings ----
 const SETTINGS_KEY = 'opening-prep:settings';
 export const DEFAULT_SETTINGS = {
   theme: 'system', // system | dark | light
-  board: 'brown', // brown | blue | green | grey
+  board: 'brown', // brown | blue | green | grey, or an iOS theme (see board.js BOARD_THEMES)
+  pieces: 'cburnett', // cburnett, or one of the ported iOS piece sets
+  animation: 0.2, // seconds per move; 0 = instant
+  lastMove: true,
+  decoration: '#c22e24', // colour of study arrows and square marks
+  drillPacing: 'auto', // auto | manual (wait for Continue after each answer)
   arrows: 4,
   minGames: 3,
   engine: 'both', // both (cloud, then on-device Stockfish) | cloud | off
