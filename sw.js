@@ -1,6 +1,6 @@
 // Offline support: the app shell is served from cache and refreshed in the
 // background. Lichess API calls always go to the network.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `opening-prep-${VERSION}`;
 const SHELL = [
   './',
@@ -21,6 +21,7 @@ const SHELL = [
   './js/data.js',
   './js/replayer.js',
   './js/replay.worker.js',
+  './js/drill.js',
   './js/components/search.js',
   './js/components/prep.js',
   './js/components/explore.js',
