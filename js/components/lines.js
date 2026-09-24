@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, useRef } from '../../vendor/preact/hooks.
 import { html, Icon, IconButton, Sheet, Empty, toast, vibrate, downloadText, shareOrCopy, shortDate } from '../ui.js';
 import { Board, destsOf } from '../board.js';
 import { formatLine, playPath, fenKey, rankedMoves } from '../tree.js';
+import { createSession, currentId, isRetry, expectedMove, lineComplete, isOppTurn, advanceOpp, submitMove, finishLine, summary } from '../drill.js';
 import { putLine, deleteLine } from '../store.js';
 
 export function toPgn(lines, oppName) {
@@ -117,110 +118,121 @@ export function SaveLineSheet({ open, onClose, edit, path, sans, opening, oppId,
 
 // ---- drill ----
 
-/** Trie of saved lines: key = uci prefix joined with ',' → Set of next moves. */
-function buildTrie(lines) {
-  const next = new Map();
-  for (const l of lines) {
-    for (let i = 0; i < l.path.length; i++) {
-      const k = l.path.slice(0, i).join(',');
-      if (!next.has(k)) next.set(k, new Set());
-      next.get(k).add(l.path[i]);
-    }
-  }
-  return next;
-}
-
-function pickWeighted(options, tree, fen) {
-  const ranked = rankedMoves(tree?.nodes.get(fenKey(fen)));
-  const weights = options.map((u) => ranked.find((m) => m.uci === u)?.w || 0.1);
-  let r = Math.random() * weights.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < options.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return options[i];
-  }
-  return options[options.length - 1];
-}
-
 export function DrillView({ lines, tree, myColor, oppName, settings, onExit }) {
-  const trie = useMemo(() => buildTrie(lines), [lines]);
-  const [path, setPath] = useState([]);
-  const [stats, setStats] = useState({ correct: 0, wrong: 0, runs: 0 });
-  const [status, setStatus] = useState('play'); // play | wrong | done
+  const byId = useMemo(() => new Map(lines.map((l) => [l.id, l])), [lines]);
+  const [session, setSession] = useState(() => createSession(lines));
+  const [status, setStatus] = useState('play'); // play | wrong | alt | lineDone | finished
+  const [stats, setStats] = useState({ correct: 0, wrong: 0 });
   const [hint, setHint] = useState(null);
   const [resetKey, setResetKey] = useState(0);
   const [shake, setShake] = useState(false);
-  const timer = useRef(null);
 
-  const { chess } = useMemo(() => playPath(path), [path.join(',')]);
+  const line = byId.get(currentId(session)) || null;
+  const path = line ? line.path.slice(0, session.ply) : [];
+  const { chess, sans } = useMemo(() => playPath(path), [path.join(',')]);
   const fen = chess.fen();
-  const options = [...(trie.get(path.join(',')) || [])];
   const turnColor = chess.turn() === 'w' ? 'white' : 'black';
-  const myTurn = turnColor === myColor;
+  const oppTurn = line ? isOppTurn(session, myColor) : false;
+  const myTurn = !!line && !oppTurn && !lineComplete(session, line);
   const last = chess.history({ verbose: true }).slice(-1)[0];
 
+  const nextLine = () => {
+    setHint(null);
+    setSession((s) => finishLine(s));
+    setStatus('play');
+  };
+
   useEffect(() => {
-    clearTimeout(timer.current);
-    if (status !== 'play') return;
-    if (!options.length) {
-      setStatus('done');
-      setStats((s) => ({ ...s, runs: s.runs + 1 }));
+    if (session.done) {
+      setStatus('finished');
+      return;
+    }
+    if (status !== 'play' || !line) return;
+    if (lineComplete(session, line)) {
+      setStatus('lineDone');
       if (settings.haptics) vibrate([10, 40, 10]);
       return;
     }
-    if (!myTurn) {
-      timer.current = setTimeout(() => setPath((p) => [...p, pickWeighted(options, tree, fen)]), 550);
-    }
-    return () => clearTimeout(timer.current);
-  }, [path.join(','), status]);
+    if (!oppTurn) return;
+    const t = setTimeout(() => setSession((s) => advanceOpp(s)), 550);
+    return () => clearTimeout(t);
+  }, [session.index, session.ply, session.done, status]);
+
+  // Move on to the next line automatically shortly after finishing one.
+  useEffect(() => {
+    if (status !== 'lineDone') return;
+    const t = setTimeout(nextLine, 1400);
+    return () => clearTimeout(t);
+  }, [status, session.index]);
 
   const onMove = (orig, dest) => {
     if (!myTurn || status !== 'play') return setResetKey((k) => k + 1);
     const m = chess.moves({ verbose: true }).find((x) => x.from === orig && x.to === dest && (!x.promotion || x.promotion === 'q'));
     const uci = m ? m.from + m.to + (m.promotion || '') : orig + dest;
-    if (options.includes(uci)) {
+    const { session: next, result } = submitMove(session, line, uci, lines);
+    setSession(next);
+    if (result === 'correct') {
       setHint(null);
       setStats((s) => ({ ...s, correct: s.correct + 1 }));
-      setPath((p) => [...p, uci]);
       if (settings.haptics) vibrate(8);
-    } else {
+      return;
+    }
+    if (result === 'wrong') {
       setStats((s) => ({ ...s, wrong: s.wrong + 1 }));
-      setHint(options[0]);
-      setStatus('wrong');
       setShake(true);
       if (settings.haptics) vibrate([30, 50, 30]);
       setTimeout(() => setShake(false), 400);
-      setTimeout(() => {
-        setResetKey((k) => k + 1);
-        setStatus('play');
-      }, 900);
     }
+    setHint(expectedMove(session, line));
+    setStatus(result);
+    setTimeout(() => {
+      setResetKey((k) => k + 1);
+      setStatus('play');
+    }, result === 'alt' ? 1600 : 900);
   };
 
-  const restart = () => {
-    setPath([]);
+  const startOver = (subset) => {
+    setSession(createSession(subset));
+    setStats({ correct: 0, wrong: 0 });
     setHint(null);
     setStatus('play');
     setResetKey((k) => k + 1);
   };
 
-  const shapes = hint ? [{ orig: hint.slice(0, 2), dest: hint.slice(2, 4), brush: 'hint' }] : [];
+  // How often the opponent really plays the move they just made in the drill.
+  let oppInfo = '';
+  if (line && session.ply > 0 && !isOppTurn({ ply: session.ply }, myColor) && last) {
+    const before = playPath(line.path.slice(0, session.ply - 1)).chess.fen();
+    const m = rankedMoves(tree?.nodes.get(fenKey(before))).find((x) => x.uci === line.path[session.ply - 1]);
+    oppInfo = m ? `${oppName} played ${m.san} in ${Math.round(m.freq * 100)}% of their games here` : `${oppName} hasn't played ${last.san} here in their games`;
+  }
+
   const total = stats.correct + stats.wrong;
-  const { sans } = playPath(path);
   const message =
-    status === 'done'
-      ? 'Line complete!'
+    status === 'finished'
+      ? 'Round complete!'
+      : status === 'lineDone'
+      ? 'Line complete ✓'
       : status === 'wrong'
       ? 'Not your prep move. Try again'
+      : status === 'alt'
+      ? 'That\u2019s your prep in another line. This one continues with the highlighted move'
       : myTurn
       ? hint
         ? 'Play the highlighted move'
         : 'Your move: play your prep'
       : `${oppName} is thinking…`;
+  const shapes = hint ? [{ orig: hint.slice(0, 2), dest: hint.slice(2, 4), brush: 'hint' }] : [];
+  const results = status === 'finished' ? summary(session, lines) : [];
+  const missed = results.filter((r) => r.mistakes > 0).map((r) => r.line);
+  const lineLabel = line
+    ? `Line ${Math.min(session.index + 1, session.base)} of ${session.base}${isRetry(session) ? ' · retry' : ''} · ${line.name}`
+    : `${lines.length} line${lines.length === 1 ? '' : 's'} · you play ${myColor}`;
 
   return html`<main class="prep drill">
     <header class="topbar">
       <${IconButton} icon="close" label="Exit drill" onClick=${onExit} />
-      <div class="opp-card"><span class="opp-name">Drill vs ${oppName}</span><small>${lines.length} line${lines.length === 1 ? '' : 's'} · you play ${myColor}</small></div>
+      <div class="opp-card"><span class="opp-name">Drill vs ${oppName}</span><small>${lineLabel}</small></div>
       <div class="drill-score" title="Correct moves this session">${total ? `${Math.round((stats.correct / total) * 100)}%` : '–'}</div>
     </header>
     <div class="prep-main">
@@ -239,12 +251,24 @@ export function DrillView({ lines, tree, myColor, oppName, settings, onExit }) {
             <div class="stat-row">
               <div class="stat"><b>${stats.correct}</b><small>correct</small></div>
               <div class="stat"><b>${stats.wrong}</b><small>mistakes</small></div>
-              <div class="stat"><b>${stats.runs}</b><small>lines done</small></div>
+              <div class="stat"><b>${Object.keys(session.results).length}/${session.base}</b><small>lines done</small></div>
             </div>
-            ${status === 'done'
-              ? html`<button class="btn primary block" onClick=${restart}><${Icon} name="refresh" size=${16} /> Next run</button>`
-              : html`<button class="btn block" onClick=${restart}><${Icon} name="refresh" size=${16} /> Restart</button>`}
-            <p class="hint">${oppName}'s moves are picked in proportion to how often they actually play them, so you'll see their favourites most.</p>
+            ${status === 'finished'
+              ? html`<ul class="drill-summary">
+                  ${results.map(
+                    (r) => html`<li key=${r.line.id}>
+                      <span class=${`res-chip ${r.mistakes ? 'bad' : 'good'}`}>${r.mistakes ? `${r.mistakes} ✗` : '✓'}</span>
+                      <span class="drill-sum-main"><b>${r.line.name}</b><small class="line-moves">${formatLine(r.line.sans)}</small></span>
+                    </li>`
+                  )}
+                </ul>
+                <button class="btn primary block" onClick=${() => startOver(lines)}><${Icon} name="refresh" size=${16} /> Drill again</button>
+                ${missed.length ? html`<button class="btn block" onClick=${() => startOver(missed)}><${Icon} name="target" size=${16} /> Drill missed only (${missed.length})</button>` : ''}`
+              : status === 'lineDone'
+              ? html`<button class="btn primary block" onClick=${nextLine}><${Icon} name="next" size=${16} /> Next line</button>`
+              : html`<button class="btn block" onClick=${() => startOver(lines)}><${Icon} name="refresh" size=${16} /> Restart</button>`}
+            ${oppInfo && status !== 'finished' ? html`<p class="hint">${oppInfo}.</p>` : ''}
+            <p class="hint">Each saved line comes up once per round in random order. Lines you miss come back at the end.</p>
           </div>
         </div>
       </section>

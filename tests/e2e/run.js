@@ -115,6 +115,19 @@ try {
   await page.waitForSelector('.move-table, .empty');
   await shot(page, 'explore-suggested-line');
 
+  // Save a second line that differs on the opponent's reply: 1.e4 e5 2.Nf3
+  await page.click('.tabs button:has-text("Explore")');
+  await page.click('button[aria-label="Start position"]');
+  for (const san of ['e4', 'e5', 'Nf3']) {
+    await page.click(`.mt-row:has(.san:text-is("${san}"))`);
+    await page.waitForTimeout(150);
+  }
+  await page.click('button[aria-label="Save this line"]');
+  await page.waitForSelector('.sheet');
+  await page.fill('#line-name', 'Open game');
+  await page.click('.sheet button[type=submit]');
+  await page.waitForSelector('.sheet', { state: 'detached' });
+
   // Lines tab persists after reload
   await page.click('.tabs button:has-text("My lines")');
   await page.waitForSelector('.saved-line');
@@ -122,10 +135,11 @@ try {
   await page.waitForSelector('.tabs');
   await page.click('.tabs button:has-text("My lines")');
   await page.waitForSelector('.saved-line');
-  assert.match(await page.textContent('.saved-line'), /they score badly/);
+  assert.equal(await page.locator('.saved-line').count(), 2);
+  assert.match(await page.textContent('.line-list'), /they score badly/);
   await shot(page, 'lines');
 
-  // Drill: we play White; our first prep move is e4
+  // Drill: both lines start 1.e4 and continue 2.Nf3 after the opponent's reply
   await page.click('.lines-actions .btn.primary');
   await page.waitForSelector('.drill');
   const box = await page.locator('.drill .cg-wrap').boundingBox();
@@ -140,17 +154,34 @@ try {
     await page.mouse.click(a.x, a.y);
     await page.mouse.click(b.x, b.y);
   };
-  await move('d2', 'd4'); // wrong
-  await page.waitForSelector('.drill-status.wrong');
-  await shot(page, 'drill-wrong');
-  await page.waitForSelector('.drill-status:not(.wrong)', { timeout: 3000 });
-  await move('e2', 'e4');
-  await page.waitForTimeout(900); // opponent replies c5
-  await move('g1', 'f3');
-  await page.waitForTimeout(900); // opponent replies d6
-  await page.waitForSelector('.drill-status.done', { timeout: 3000 });
+  const drilled = [];
+  const drillLine = async (withMistake) => {
+    await page.waitForTimeout(300); // let the board pick up the new line
+    drilled.push((await page.textContent('.drill .opp-card small')).split(' · ').pop());
+    if (withMistake) {
+      await move('d2', 'd4');
+      await page.waitForSelector('.drill-status.wrong');
+      await shot(page, 'drill-wrong');
+      await page.waitForSelector('.drill-status.play', { timeout: 3000 });
+    }
+    await move('e2', 'e4');
+    await page.waitForTimeout(900); // opponent replies from this line
+    await move('g1', 'f3');
+    await page.waitForSelector('.drill-status.lineDone', { timeout: 3000 });
+  };
+  await drillLine(true);
+  await page.click('.drill-card button:has-text("Next line")');
+  await drillLine(false);
+  await page.click('.drill-card button:has-text("Next line")');
+  // the missed line comes back once
+  await page.waitForSelector('.drill .opp-card small:has-text("retry")');
+  await drillLine(false);
+  await page.waitForSelector('.drill-status.finished', { timeout: 4000 });
   await shot(page, 'drill-done');
-  assert.match(await page.textContent('.drill-card'), /2\s*correct/);
+  assert.notEqual(drilled[0], drilled[1], `both lines drilled: ${drilled}`);
+  assert.equal(drilled[2], drilled[0]);
+  assert.equal(await page.locator('.drill-summary li').count(), 2);
+  assert.match(await page.textContent('.drill-summary'), /1 ✗/);
   await page.click('button[aria-label="Exit drill"]');
   await page.click('.tabs button:has-text("Explore")');
 
@@ -192,6 +223,7 @@ try {
   console.log(`e2e passed, screenshots in ${SHOTS}`);
 } catch (e) {
   console.error(e);
+  for (const p of browser.contexts().flatMap((c) => c.pages())) await p.screenshot({ path: `${SHOTS}failure.png` }).catch(() => {});
   console.error(errors);
   process.exitCode = 1;
 } finally {

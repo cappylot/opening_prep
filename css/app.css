@@ -1523,6 +1523,33 @@ textarea.input {
   background: var(--bad-soft);
   color: var(--bad);
 }
+.drill-status.alt {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.drill-summary {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+}
+.drill-summary li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.drill-sum-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.drill-sum-main small {
+  color: var(--text-2);
+  font-weight: 500;
+}
+.drill-status.lineDone,
+.drill-status.finished,
 .drill-status.done {
   background: var(--good-soft);
   color: var(--good);
