@@ -1,0 +1,650 @@
+[
+  {
+    "answer" : "c7c6",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "c4650e594083916bd04b2b9bca6decc6dec3ea8f56ef0e173cdd05e7ac34e24b",
+    "prompt" : "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "d7d5",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "e5567d9d5efe46c03d2fc3774e92f7fd87cc2aa69323eb7cba7b92702a8accf2",
+    "prompt" : "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "d5e4",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "8ef197223ef2e07a1b56ba4c6191cc924d46f39ebaca1e954489648e0584cdd6",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/2N5/PPP2PPP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/2N5/PPP2PPP/R1BQKBNR b KQkq - 1 3",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c8f5",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "88dd9069b8abbc54ef5bb312b9970500df6ead217da199f88bb52588a7db50cb",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/8/3PN3/8/PPP2PPP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/8/3PN3/8/PPP2PPP/R1BQKBNR b KQkq - 0 4",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "f5g6",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "45aeb61e12f2968f9ee4d66339f5449f67bb1cb332fbb91342a0de686f11909c",
+    "prompt" : "rn1qkbnr/pp2pppp/2p5/5b2/3P4/6N1/PPP2PPP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp2pppp/2p5/5b2/3P4/6N1/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "h7h6",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "2d508c1058dfaa72f3bf8f415380f0de4b8409afb734878611b656e7a0550f70",
+    "prompt" : "rn1qkbnr/pp2pppp/2p3b1/8/3P3P/6N1/PPP2PP1/R1BQKBNR b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp2pppp/2p3b1/8/3P3P/6N1/PPP2PP1/R1BQKBNR b KQkq h3 0 6",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "b8d7",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "b534c29200168e261bf3a952ea2f017e4ee61e02eb2184750eb2377518169e4b",
+    "prompt" : "rn1qkbnr/pp2ppp1/2p3bp/8/3P3P/5NN1/PPP2PP1/R1BQKB1R b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp2ppp1/2p3bp/8/3P3P/5NN1/PPP2PP1/R1BQKB1R b KQkq - 1 7",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "g6h7",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "d533e4641b1278efdafa335f048cb65312627ad7027add2a3f36d713e65e3def",
+    "prompt" : "r2qkbnr/pp1nppp1/2p3bp/7P/3P4/5NN1/PPP2PP1/R1BQKB1R b KQkq -",
+    "promptFEN" : "r2qkbnr/pp1nppp1/2p3bp/7P/3P4/5NN1/PPP2PP1/R1BQKB1R b KQkq - 0 8",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "h7d3",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "2329b7120bdcd4984b90d5b1a6e8e763e4bdd9033c50eb6acdaf60ce2262dc9b",
+    "prompt" : "r2qkbnr/pp1npppb/2p4p/7P/3P4/3B1NN1/PPP2PP1/R1BQK2R b KQkq -",
+    "promptFEN" : "r2qkbnr/pp1npppb/2p4p/7P/3P4/3B1NN1/PPP2PP1/R1BQK2R b KQkq - 2 9",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "e7e6",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "4bfbdb7b41dd49c075573fcadd54ccc0c5ca289528fb497bcf95887b13860e9d",
+    "prompt" : "r2qkbnr/pp1nppp1/2p4p/7P/3P4/3Q1NN1/PPP2PP1/R1B1K2R b KQkq -",
+    "promptFEN" : "r2qkbnr/pp1nppp1/2p4p/7P/3P4/3Q1NN1/PPP2PP1/R1B1K2R b KQkq - 0 10",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "g8f6",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "28952beec07670580648837d8ce53a51f745acbb5fb0a81b423bd9da08ef9b82",
+    "prompt" : "r2qkbnr/pp1n1pp1/2p1p2p/7P/3P4/3Q1NN1/PPPB1PP1/R3K2R b KQkq -",
+    "promptFEN" : "r2qkbnr/pp1n1pp1/2p1p2p/7P/3P4/3Q1NN1/PPPB1PP1/R3K2R b KQkq - 1 11",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "f8e7",
+    "chapter" : "caro-kann-black-ch0",
+    "hash" : "c46127cde30252aaf308a7f077ee21de1ef7d032054af730d31a8dcc271501d3",
+    "prompt" : "r2qkb1r/pp1n1pp1/2p1pn1p/7P/3P4/3Q1NN1/PPPB1PP1/2KR3R b kq -",
+    "promptFEN" : "r2qkb1r/pp1n1pp1/2p1pn1p/7P/3P4/3Q1NN1/PPPB1PP1/2KR3R b kq - 3 12",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c7c6",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "1a978fe8b64f35d7af5f220f2a307dcb4b91218db4679972f86e60b580870a3a",
+    "prompt" : "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "d7d5",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "75d7388074edaa7669c7b806a2f90c496db46c5c83e1ff5c727655a639a3fdf1",
+    "prompt" : "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c8f5",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "587a3c096e192f2b9eb5c587d3c6e8914e0439212e3863a2d64a19e5e7ab2439",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "e7e6",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "a28cdbb98afb1b23b212d0cc73219d1c8e34ee49b2566e918814fcdf64e48017",
+    "prompt" : "rn1qkbnr/pp2pppp/2p5/3pPb2/3P4/5N2/PPP2PPP/RNBQKB1R b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp2pppp/2p5/3pPb2/3P4/5N2/PPP2PPP/RNBQKB1R b KQkq - 2 4",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "g8e7",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "04522fa13fc2aa673e4b6c05e26e09679bba48fdaf2a8901c69b03cd5f09ed06",
+    "prompt" : "rn1qkbnr/pp3ppp/2p1p3/3pPb2/3P4/5N2/PPP1BPPP/RNBQK2R b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp3ppp/2p1p3/3pPb2/3P4/5N2/PPP1BPPP/RNBQK2R b KQkq - 1 5",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "h7h6",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "3deae56cc52ae6384c0af33e6cdfe04594d2ea3f8f044c8840c22dea3e795b84",
+    "prompt" : "rn1qkb1r/pp2nppp/2p1p3/3pPb2/3P4/5N2/PPP1BPPP/RNBQ1RK1 b kq -",
+    "promptFEN" : "rn1qkb1r/pp2nppp/2p1p3/3pPb2/3P4/5N2/PPP1BPPP/RNBQ1RK1 b kq - 3 6",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "b8d7",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "a6a0fab5193ad20326adc545a06b73863d01bbe4670ddeea12a209106dde60d6",
+    "prompt" : "rn1qkb1r/pp2npp1/2p1p2p/3pPb2/3P4/5N2/PPPNBPPP/R1BQ1RK1 b kq -",
+    "promptFEN" : "rn1qkb1r/pp2npp1/2p1p2p/3pPb2/3P4/5N2/PPPNBPPP/R1BQ1RK1 b kq - 1 7",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c6c5",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "bfd16c6309d0c51c63ea94b26ed68a23ac8e7211e3944894fd6b00b57d398b9e",
+    "prompt" : "r2qkb1r/pp1nnpp1/2p1p2p/3pPb2/3P4/1N3N2/PPP1BPPP/R1BQ1RK1 b kq -",
+    "promptFEN" : "r2qkb1r/pp1nnpp1/2p1p2p/3pPb2/3P4/1N3N2/PPP1BPPP/R1BQ1RK1 b kq - 3 8",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "b8d7",
+    "chapter" : "caro-kann-black-ch1",
+    "hash" : "e840740963f14736b98279f0998fac1443350d945fbdeee6980698ad29e275bd",
+    "prompt" : "rn1qkbnr/pp3ppp/4p3/2ppPb2/3P4/4BN2/PPP1BPPP/RN1QK2R b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp3ppp/4p3/2ppPb2/3P4/4BN2/PPP1BPPP/RN1QK2R b KQkq - 1 6",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c7c6",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "b1723ea069f558c25f7a86fa5b2dafaf93bac117d48bd69d7a5c5a2468554fa9",
+    "prompt" : "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "d7d5",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "43b2f0d67f022cfc4deec72a674c5873e79682dcf25a89c4a5aeb82a25c1913d",
+    "prompt" : "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c6d5",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "a4f23a1ff3a36035fe7eb5954908632ad909e7d8ee9a049f6e286ad04379148a",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/3P4/3P4/8/PPP2PPP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/3P4/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "b8c6",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "83c5b05715840575da1449ea26fe9e9a2b9a3c2d9bce3d9e0a77a8f5cf15a927",
+    "prompt" : "rnbqkbnr/pp2pppp/8/3p4/3P4/3B4/PPP2PPP/RNBQK1NR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/8/3p4/3P4/3B4/PPP2PPP/RNBQK1NR b KQkq - 1 4",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "g8f6",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "6a1f8a5f41d8e48f66ba070c00a1b62774c2a29342d8540dc85bd9a792ef526c",
+    "prompt" : "r1bqkbnr/pp2pppp/2n5/3p4/3P4/2PB4/PP3PPP/RNBQK1NR b KQkq -",
+    "promptFEN" : "r1bqkbnr/pp2pppp/2n5/3p4/3P4/2PB4/PP3PPP/RNBQK1NR b KQkq - 0 5",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c8g4",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "7c331baf2a7f8336443153cba40ad935c289ccc156f5b1a75d5bf975949476d9",
+    "prompt" : "r1bqkb1r/pp2pppp/2n2n2/3p4/3P1B2/2PB4/PP3PPP/RN1QK1NR b KQkq -",
+    "promptFEN" : "r1bqkb1r/pp2pppp/2n2n2/3p4/3P1B2/2PB4/PP3PPP/RN1QK1NR b KQkq - 2 6",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c6a5",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "24ef0015fcb9cc1abfe76af14024aa6a18f584e9f34df933da461ced851f279d",
+    "prompt" : "r2qkb1r/pp2pppp/2n2n2/3p4/3P1Bb1/1QPB4/PP3PPP/RN2K1NR b KQkq -",
+    "promptFEN" : "r2qkb1r/pp2pppp/2n2n2/3p4/3P1Bb1/1QPB4/PP3PPP/RN2K1NR b KQkq - 4 7",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "g4d7",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "96549f0ea60eb2ee60ee9fafbea94166194d4c6500b0cf4cc14e863a34db8bfb",
+    "prompt" : "r2qkb1r/pp2pppp/5n2/n2p4/Q2P1Bb1/2PB4/PP3PPP/RN2K1NR b KQkq -",
+    "promptFEN" : "r2qkb1r/pp2pppp/5n2/n2p4/Q2P1Bb1/2PB4/PP3PPP/RN2K1NR b KQkq - 6 8",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "e7e6",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "04f9ada1f15c2cc4d1e93c8ea8e6ff36f384ea860a4ca3938d1c83acb2f288e7",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/5P2/PPP3PP/RNBQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/5P2/PPP3PP/RNBQKBNR b KQkq - 0 3",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "f8b4",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "39e08cba6762ebe86405d455d43988f3e5e99371ee2ae495f3b46d773ad72354",
+    "prompt" : "rnbqkbnr/pp3ppp/2p1p3/3p4/3PP3/2N2P2/PPP3PP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp3ppp/2p1p3/3p4/3PP3/2N2P2/PPP3PP/R1BQKBNR b KQkq - 1 4",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "d5e4",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "1b035f7ad4752fdb34de89d5c748e605e33f245b864e0998bcd66bb550416336",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/8/PPPN1PPP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/8/PPPN1PPP/R1BQKBNR b KQkq - 1 3",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "c8f5",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "ca88f621acfe156799e6cdcc26041df4e34680c14e0eaec9b2060c0c1a0a819a",
+    "prompt" : "rnbqkbnr/pp2pppp/2p5/8/3PN3/8/PPP2PPP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rnbqkbnr/pp2pppp/2p5/8/3PN3/8/PPP2PPP/R1BQKBNR b KQkq - 0 4",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "f5g6",
+    "chapter" : "caro-kann-black-ch2",
+    "hash" : "69347c710cef343a86456e7068ed666c67089eba36326799db9cb799dcebd34d",
+    "prompt" : "rn1qkbnr/pp2pppp/2p5/5b2/3P4/6N1/PPP2PPP/R1BQKBNR b KQkq -",
+    "promptFEN" : "rn1qkbnr/pp2pppp/2p5/5b2/3P4/6N1/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+    "study" : "caro-kann-black"
+  },
+  {
+    "answer" : "e2e4",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "bc2a44389d9eaa983083745034d7f1118c355d1708382e40da906dd671ccbf43",
+    "prompt" : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -",
+    "promptFEN" : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "g1f3",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "32b8a68d5be8620e657eefad754e4f147bc04eaa31f084bfdcba2cc26bdd08b6",
+    "prompt" : "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -",
+    "promptFEN" : "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f1b5",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "dd1e4240dad6ed59fe988ee00ad5c3e3eb6bbbd2347795386404ca039a760511",
+    "prompt" : "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -",
+    "promptFEN" : "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b5a4",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "7d1a8b1444c04c532faf79d7b14bfcbad40b40cf769cf201cd48a3b90a022ded",
+    "prompt" : "r1bqkbnr/1ppp1ppp/p1n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkbnr/1ppp1ppp/p1n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e1g1",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "bcbc30abfe271cd54b6feea2bfa4ff354aaf57cf8a9133b24e497c0bf14f1b91",
+    "prompt" : "r1bqkb1r/1ppp1ppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkb1r/1ppp1ppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f1e1",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "93652798c16c3e37f8fbc7af3428220d7f07fa70a2d0ad37eb2bbe0249d37a37",
+    "prompt" : "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 4 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "a4b3",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "d8ec246d3b4284b350b3dec9a3d5b1f1269fa239151c175a336034f8de3fd57f",
+    "prompt" : "r1bqk2r/2ppbppp/p1n2n2/1p2p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 w kq -",
+    "promptFEN" : "r1bqk2r/2ppbppp/p1n2n2/1p2p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 w kq b6 0 7",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "c2c3",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "bb05ba64e4478351e5cb3a20f7ac20dfee6dff0adec3179370853199ba3cb15e",
+    "prompt" : "r1bqk2r/2p1bppp/p1np1n2/1p2p3/4P3/1B3N2/PPPP1PPP/RNBQR1K1 w kq -",
+    "promptFEN" : "r1bqk2r/2p1bppp/p1np1n2/1p2p3/4P3/1B3N2/PPPP1PPP/RNBQR1K1 w kq - 0 8",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "h2h3",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "37e149f8846911d0280ba1c3fd50bb37b4c2794141e1c3eaafb2b21d1399fb63",
+    "prompt" : "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b3c2",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "e9776d632f3bbb1922b2eac79036b02ecf7c094fe0d1c9aa9bfce8a25df47077",
+    "prompt" : "r1bq1rk1/2p1bppp/p2p1n2/np2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/2p1bppp/p2p1n2/np2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w - - 1 10",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "432c296cc46cad6dc5ec108e2f8a57fc2404cbbe61cdae19278f811fec61248d",
+    "prompt" : "r1bq1rk1/4bppp/p2p1n2/npp1p3/4P3/2P2N1P/PPBP1PP1/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/4bppp/p2p1n2/npp1p3/4P3/2P2N1P/PPBP1PP1/RNBQR1K1 w - c6 0 11",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "53f69390ed230ef674f459e4bd14798c5720ddb3bc14651f2d1b6d50cb636180",
+    "prompt" : "rnbq1rk1/2p1bppp/p2p1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w - -",
+    "promptFEN" : "rnbq1rk1/2p1bppp/p2p1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w - - 1 10",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "43e79ba6b0865c659cfb066e2059c704862f29fbd06fe4fcec6a13b7434a7167",
+    "prompt" : "r2q1rk1/1bp1bppp/p1np1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w - -",
+    "promptFEN" : "r2q1rk1/1bp1bppp/p1np1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w - - 1 10",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "c2c3",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "6053378120f3e06e70bb950835c414c61692962b0d82fe7a0d450d2afa7b5ef1",
+    "prompt" : "r1bq1rk1/2ppbppp/p1n2n2/1p2p3/4P3/1B3N2/PPPP1PPP/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/2ppbppp/p1n2n2/1p2p3/4P3/1B3N2/PPPP1PPP/RNBQR1K1 w - - 2 8",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e4d5",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "8fc9deafe9192e407ca03be8600eb3b36e7ab28605e801d19da81fdaa41221c6",
+    "prompt" : "r1bq1rk1/2p1bppp/p1n2n2/1p1pp3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/2p1bppp/p1n2n2/1p1pp3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - d6 0 9",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f3e5",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "f247d4ebb30fa76560d12d1e89df7757ce95cd94b6a6540726ee390740d42661",
+    "prompt" : "r1bq1rk1/2p1bppp/p1n5/1p1np3/8/1BP2N2/PP1P1PPP/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/2p1bppp/p1n5/1p1np3/8/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 0 10",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e1e5",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "59c1e7bd13a413a4cb8c28ad2f359641ef03d0b0a905b898bddf8ecbb5f5e5c9",
+    "prompt" : "r1bq1rk1/2p1bppp/p7/1p1nn3/8/1BP5/PP1P1PPP/RNBQR1K1 w - -",
+    "promptFEN" : "r1bq1rk1/2p1bppp/p7/1p1nn3/8/1BP5/PP1P1PPP/RNBQR1K1 w - - 0 11",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e1g1",
+    "chapter" : "ruy-lopez-white-ch0",
+    "hash" : "90cfc749a08a191f3b75cdc4635766602d97b35b4149c117fd5256efa2b840d2",
+    "prompt" : "r1bqkbnr/1pp2ppp/p1p5/4p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkbnr/1pp2ppp/p1p5/4p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e2e4",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "b1febf5717f602a27b0a83257fe34b4d83a6c9ad816c18c661f80b2a4e8bff23",
+    "prompt" : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -",
+    "promptFEN" : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "g1f3",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "215a4570a80599a56da6403f3cfa7690563b646cb14311286be2f0e6b570b782",
+    "prompt" : "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -",
+    "promptFEN" : "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f1b5",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "2b402ea9fec54d48fe9474cbb0a5bf12c4871eb12f7bc844035cd465a6ada959",
+    "prompt" : "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -",
+    "promptFEN" : "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e1g1",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "e41918f806c2686af95b6a0e962d285f2e7584303cc9ee4cfecd75fdb3be7cdf",
+    "prompt" : "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "7a8e8f92760dcc3109321c3e384d91baaf4d60f8418af58b67d4702964c767d7",
+    "prompt" : "r1bqkb1r/pppp1ppp/2n5/1B2p3/4n3/5N2/PPPP1PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqkb1r/pppp1ppp/2n5/1B2p3/4n3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 0 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b5c6",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "2cf860c823cad6a1fe8b9ff5181384ebd3d7ae847b016ad6feb94e4329708227",
+    "prompt" : "r1bqkb1r/pppp1ppp/2nn4/1B2p3/3P4/5N2/PPP2PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqkb1r/pppp1ppp/2nn4/1B2p3/3P4/5N2/PPP2PPP/RNBQ1RK1 w kq - 1 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d4e5",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "f6aef0ebd5b501bfd596f4415a1372e79247ae8f44c3e37c3b5046f281703045",
+    "prompt" : "r1bqkb1r/ppp2ppp/2pn4/4p3/3P4/5N2/PPP2PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqkb1r/ppp2ppp/2pn4/4p3/3P4/5N2/PPP2PPP/RNBQ1RK1 w kq - 0 7",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d1d8",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "da43775f3606b712d0f55862b32d2fcfba82de04963ab0e3e9461dead769f46a",
+    "prompt" : "r1bqkb1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqkb1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNBQ1RK1 w kq - 1 8",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "h2h3",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "b44b71637a86d566293c1e54c162b967818961d2de076c225807309610922749",
+    "prompt" : "r1bk1b1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNB2RK1 w - -",
+    "promptFEN" : "r1bk1b1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNB2RK1 w - - 0 9",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f1d1",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "3baa1e281c252bcb41bbf7d334acdf7c0b2ff3172b28272065e73ce6f7caf824",
+    "prompt" : "r2k1b1r/pppb1ppp/2p5/4Pn2/8/5N1P/PPP2PP1/RNB2RK1 w - -",
+    "promptFEN" : "r2k1b1r/pppb1ppp/2p5/4Pn2/8/5N1P/PPP2PP1/RNB2RK1 w - - 1 10",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b1c3",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "02ab72d648ba23a45630a3da589a62f781c2d1a11a73b28bdd91973bb4d62360",
+    "prompt" : "r1b1kb1r/ppp2ppp/2p5/4Pn2/8/5N1P/PPP2PP1/RNB2RK1 w - -",
+    "promptFEN" : "r1b1kb1r/ppp2ppp/2p5/4Pn2/8/5N1P/PPP2PP1/RNB2RK1 w - - 1 10",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "c2c3",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "27cd4dca0658c1b9149de408ac98b353b63ac5b80de8f0f3f58a30f6530cd528",
+    "prompt" : "r1bqk2r/pppp1ppp/2n2n2/1Bb1p3/4P3/5N2/PPPP1PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqk2r/pppp1ppp/2n2n2/1Bb1p3/4P3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 6 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "b9d94c9b40725456dd40b8949bed11e9e66fa414025798fb9fffaf49c3300572",
+    "prompt" : "r1bq1rk1/pppp1ppp/2n2n2/1Bb1p3/4P3/2P2N2/PP1P1PPP/RNBQ1RK1 w - -",
+    "promptFEN" : "r1bq1rk1/pppp1ppp/2n2n2/1Bb1p3/4P3/2P2N2/PP1P1PPP/RNBQ1RK1 w - - 1 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "6f3a797ff12a283ff5359d2a38362396a65a303d0608bdbaddb14e422150fd27",
+    "prompt" : "r1bqkb1r/ppp2ppp/2np1n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r1bqkb1r/ppp2ppp/2np1n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 0 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b1c3",
+    "chapter" : "ruy-lopez-white-ch1",
+    "hash" : "c6ba98d8deec68849f38dbe5d8d7ede6d02bfc9ec97661f9a529c82a01c491e2",
+    "prompt" : "r2qkb1r/pppb1ppp/2np1n2/1B2p3/3PP3/5N2/PPP2PPP/RNBQ1RK1 w kq -",
+    "promptFEN" : "r2qkb1r/pppb1ppp/2np1n2/1B2p3/3PP3/5N2/PPP2PPP/RNBQ1RK1 w kq - 1 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e2e4",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "7805f316d3ed363ea95b827bb63f024653be759cdd401bbf6e1ee673a2eb70d2",
+    "prompt" : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -",
+    "promptFEN" : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "g1f3",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "eeac359605acce08a6d10555923a4de76ac3544ff0cb85393f38e44bdf97f7a2",
+    "prompt" : "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -",
+    "promptFEN" : "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f1b5",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "7897d7abe2db0d4116ae54f0ea38980cc1a4b370ff4fe836800a7491ff1089d1",
+    "prompt" : "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -",
+    "promptFEN" : "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "c2c3",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "ed7979352ca4841639ca22dd4bafab56e83c92163bb70b600a287b3564d8adee",
+    "prompt" : "r1bqk1nr/pppp1ppp/2n5/1Bb1p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqk1nr/pppp1ppp/2n5/1Bb1p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "ee8c8383573a560b954c63b400df2336efe2150c259720639034d0d24153b9e4",
+    "prompt" : "r1bqk2r/pppp1ppp/2n2n2/1Bb1p3/4P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqk2r/pppp1ppp/2n2n2/1Bb1p3/4P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 1 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e1g1",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "e6be2aa33724a88942250924330633aeb2867e088eda46635191fa7741dec353",
+    "prompt" : "r1bqk2r/pppp1ppp/1bn2n2/1B2p3/3PP3/2P2N2/PP3PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqk2r/pppp1ppp/1bn2n2/1B2p3/3PP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 1 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b1c3",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "f278b1c27696f790f0c90fb3ab0c94bd14038f3fd647465625119ce72750eaee",
+    "prompt" : "r1bqkbnr/pppp2pp/2n5/1B2pp2/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkbnr/pppp2pp/2n5/1B2pp2/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq f6 0 4",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "c3e4",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "9035f4fc4fd3654caf98bac0b3dd0c70c6f61ef79606bea7e6bd65eb12179916",
+    "prompt" : "r1bqkbnr/pppp2pp/2n5/1B2p3/4p3/2N2N2/PPPP1PPP/R1BQK2R w KQkq -",
+    "promptFEN" : "r1bqkbnr/pppp2pp/2n5/1B2p3/4p3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "f3e5",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "4ade26d8fa76803a2f8d0de3a082d36c3be4964c5c19a98975ca483ff05d285a",
+    "prompt" : "r1bqkbnr/ppp3pp/2n5/1B1pp3/4N3/5N2/PPPP1PPP/R1BQK2R w KQkq -",
+    "promptFEN" : "r1bqkbnr/ppp3pp/2n5/1B1pp3/4N3/5N2/PPPP1PPP/R1BQK2R w KQkq d6 0 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "3876f730a32af22b00c578ea4fb86da03ccd0e0bfd92536a817b33ec88d0871a",
+    "prompt" : "r1bqkbnr/ppp2ppp/2np4/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkbnr/ppp2ppp/2np4/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b1c3",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "46edfa15233c7b7a68c528e6cd59ea70eb165dd5186d35b1cab6c46913b9b8de",
+    "prompt" : "r2qkbnr/pppb1ppp/2np4/1B2p3/3PP3/5N2/PPP2PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r2qkbnr/pppb1ppp/2np4/1B2p3/3PP3/5N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "e1g1",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "f5b3becd3c1721c7115fb7de4b3485477de31f05a3674588d3a15dd19b254373",
+    "prompt" : "r2qkb1r/pppb1ppp/2np1n2/1B2p3/3PP3/2N2N2/PPP2PPP/R1BQK2R w KQkq -",
+    "promptFEN" : "r2qkb1r/pppb1ppp/2np1n2/1B2p3/3PP3/2N2N2/PPP2PPP/R1BQK2R w KQkq - 3 6",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "b1c3",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "74dbdde55e6ee3c5d9bded63cb69048adcd7bf426ad683c9eb8926ecadb47edd",
+    "prompt" : "r1bqkb1r/ppppnppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -",
+    "promptFEN" : "r1bqkb1r/ppppnppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+    "study" : "ruy-lopez-white"
+  },
+  {
+    "answer" : "d2d4",
+    "chapter" : "ruy-lopez-white-ch2",
+    "hash" : "1de0b453ea0b6d62c0493b54d62aa610ad5bab5058914f6b1d7147092b8799bd",
+    "prompt" : "r1bqkb1r/ppppnp1p/2n3p1/1B2p3/4P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq -",
+    "promptFEN" : "r1bqkb1r/ppppnp1p/2n3p1/1B2p3/4P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+    "study" : "ruy-lopez-white"
+  }
+]
